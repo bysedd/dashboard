@@ -36,11 +36,11 @@ def display_player_stats(player_stats):
     st.progress(int(player_stats["overall"]))
     col1, col2, col3, _ = st.columns(4)
     with col1:
-        st.metric("Market value", f"£ {player_stats['value(£)']:,.2f}")
+        st.metric("Market value", f"£ {player_stats['value(£)']:,.0f}")
     with col2:
-        st.metric("Weekly wage", f"£ {player_stats['wage(£)']:,.2f}")
+        st.metric("Weekly wage", f"£ {player_stats['wage(£)']:,.0f}")
     with col3:
-        st.metric("Release clause", f"£ {player_stats['release clause(£)']:,.2f}")
+        st.metric("Release clause", f"£ {player_stats['release clause(£)']:,.0f}")
 
 
 def main():
