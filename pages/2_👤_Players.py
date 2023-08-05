@@ -52,4 +52,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyError:
+        st.error("Please go to the **🏠 Home** page first. Then back to this page.")
