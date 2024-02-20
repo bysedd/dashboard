@@ -158,7 +158,7 @@ def display_more_info(club_df: pd.DataFrame) -> None:
         x=position_averages.index,
         y=["Age", "Overall", "Height(Cm.)", "Weight(Lbs.)"],
         title="Averages by position",
-        labels={"variable": "Metrics"},
+        labels={"variable": "Metrics", "value": "Average"},
         color_discrete_sequence=px.colors.qualitative.Pastel,
     )
 
