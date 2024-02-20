@@ -20,6 +20,10 @@ def load_data(*, file_csv: str, num_rows: None = None) -> pd.DataFrame:
 
 
 st.title(f"FIFA23 Official Dataset")
+st.link_button(
+    label="Access data on Kaggle",
+    url="https://www.kaggle.com/datasets/kevwesophia/fifa23-official-datasetclean-data",
+)
 st.markdown(
     """
     ## About this dataset
@@ -34,10 +38,6 @@ st.markdown(
     """
 )
 st.sidebar.caption("Made with ❤️ by [Felippe A.]")
-st.link_button(
-    label="Access data on Kaggle",
-    url="https://www.kaggle.com/datasets/kevwesophia/fifa23-official-datasetclean-data",
-)
 
 st.session_state["df_data"] = load_data(
     file_csv="datasets/CLEAN_FIFA23_official_data.csv"
