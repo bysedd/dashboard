@@ -1,8 +1,6 @@
 import streamlit as st
 
-
-def set_page():
-    st.set_page_config(page_title="Teams", page_icon="⚽", layout="wide")
+st.set_page_config(page_title="Teams", page_icon="⚽", layout="wide")
 
 
 def select_club(df_data):
@@ -83,7 +81,6 @@ def display_club_stats(club_df):
 
 
 def main():
-    set_page()
     df_data = st.session_state["df_data"]
     club_df = select_club(df_data)
     display_club_info(club_df)

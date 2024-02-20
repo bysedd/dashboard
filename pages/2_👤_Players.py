@@ -1,8 +1,6 @@
 import streamlit as st
 
-
-def set_page():
-    st.set_page_config(page_title="Teams", page_icon="👤", layout="wide")
+st.set_page_config(page_title="Teams", page_icon="👤", layout="wide")
 
 
 def select_player(df_data):
@@ -44,7 +42,6 @@ def display_player_stats(player_stats):
 
 
 def main():
-    set_page()
     df_data = st.session_state["df_data"]
     player_stats = select_player(df_data)
     display_player_info(player_stats)
