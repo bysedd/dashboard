@@ -151,7 +151,7 @@ def display_more_info(club_df: pd.DataFrame) -> None:
     # Cria uma tabela com as médias por posição
     position_averages = club_df.groupby("Position")[
         ["Age", "Overall", "Height(Cm.)", "Weight(Lbs.)"]
-    ].mean()
+    ].mean().round(decimals=0)
 
     fig = px.bar(
         position_averages,
