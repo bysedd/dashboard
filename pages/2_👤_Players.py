@@ -55,4 +55,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyError:
-        st.error("Please go to the **🏠 Home** page first. Then back to this page.")
+        st.error("Please go to the **🏠 Home** first. Then back to this page.")
