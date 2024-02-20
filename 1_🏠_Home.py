@@ -26,8 +26,6 @@ st.link_button(
 )
 st.markdown(
     """
-    ## Author: [Felippe Andrade](https://linkedin.com/in/bysedd/)
-    
     ## About this dataset
     
     The Football Player Dataset from 2017 to 2023 provides comprehensive information about professional 
@@ -39,7 +37,7 @@ st.markdown(
     player positioning, and player development over time.
     """
 )
-st.sidebar.caption("Made with ❤️ by [Felippe A.](https://github.com/bysedd/)")
+st.sidebar.caption("Made with ❤️ by [Felippe A.](https://linkedin.com/in/bysedd/)")
 
 st.session_state["df_data"] = load_data(
     file_csv="datasets/CLEAN_FIFA23_official_data.csv"
