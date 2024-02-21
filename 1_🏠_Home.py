@@ -14,7 +14,7 @@ def load_data(*, file_csv: str, num_rows: None = None) -> pd.DataFrame:
     data = data[data["Value(£)"] > 0]
     data.sort_values(by="Overall", ascending=False, inplace=True)
     data.rename(lambda x: str(x).lower(), axis="columns", inplace=True)
-    
+
     data["name"] = data["name"].apply(lambda x: re.sub(r"\d+", "", x).strip())
     data["Weight(Kg.)"] = data["weight(lbs.)"].apply(lambda x: x * 0.453592)
     data["Height(m.)"] = data["height(cm.)"].apply(lambda x: x / 100)
