@@ -98,7 +98,7 @@ def display_more_info(club_df: pd.DataFrame) -> None:
             "Average age": [round(club_df["Age"].mean())],
             "Overall average": [club_df["Overall"].mean()],
             "Average height": [f"{club_df['Height(Cm.)'].mean():.2f} cm"],
-            "Average weight": [f"{club_df['Weight(Lbs.)'].mean():.2f} lbs"],
+            "Average weight": [f"{club_df['Weight(Kg.)'].mean():.2f} kg"],
             "Most contract end": [club_df["Contract Valid Until"].mode().iloc[0]],
         }
     )
@@ -136,7 +136,7 @@ def display_more_info(club_df: pd.DataFrame) -> None:
                 width="small", help="Average height of the team"
             ),
             "Average weight": st.column_config.TextColumn(
-                width="small", help="Average weight of the team"
+                width="small", help="Average weight in kilograms of the team"
             ),
             "Most contract end": st.column_config.NumberColumn(
                 format="%d",
@@ -150,13 +150,13 @@ def display_more_info(club_df: pd.DataFrame) -> None:
 
     # Cria uma tabela com as médias por posição
     position_averages = club_df.groupby("Position")[
-        ["Age", "Overall", "Height(Cm.)", "Weight(Lbs.)"]
+        ["Age", "Overall", "Height(Cm.)", "Weight(Kg.)"]
     ].mean().round(decimals=0)
 
     fig = px.bar(
         position_averages,
         x=position_averages.index,
-        y=["Age", "Overall", "Height(Cm.)", "Weight(Lbs.)"],
+        y=["Age", "Overall", "Height(Cm.)", "Weight(Kg.)"],
         title="Averages by position",
         labels={"variable": "Metrics", "value": "Average"},
         color_discrete_sequence=px.colors.qualitative.Pastel,
