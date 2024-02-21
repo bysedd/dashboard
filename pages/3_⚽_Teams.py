@@ -1,6 +1,6 @@
-import streamlit as st
 import pandas as pd
 import plotly.express as px
+import streamlit as st
 
 st.set_page_config(page_title="Teams", page_icon="⚽", layout="wide")
 
@@ -149,9 +149,11 @@ def display_more_info(club_df: pd.DataFrame) -> None:
     st.divider()
 
     # Cria uma tabela com as médias por posição
-    position_averages = club_df.groupby("Position")[
-        ["Age", "Overall", "Height(Cm.)", "Weight(Kg.)"]
-    ].mean().round(decimals=0)
+    position_averages = (
+        club_df.groupby("Position")[["Age", "Overall", "Height(Cm.)", "Weight(Kg.)"]]
+        .mean()
+        .round(decimals=0)
+    )
 
     fig = px.bar(
         position_averages,
