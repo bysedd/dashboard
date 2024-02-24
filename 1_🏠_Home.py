@@ -1,4 +1,5 @@
 import re
+import numpy as np
 
 import pandas as pd
 import streamlit as st
@@ -15,22 +16,45 @@ st.set_page_config(
 
 
 @st.cache_data
-def load_data(*, file_csv: str, num_rows: None = None) -> pd.DataFrame:
-    data = pd.read_csv(file_csv, nrows=num_rows, index_col=0)
+def load_data(*, file_csv: str) -> pd.DataFrame:
+    data = pd.read_csv(file_csv, index_col=0)
     data = data[data["Value(£)"] > 0]
     data.sort_values(by="Overall", ascending=False, inplace=True)
-    data.rename(lambda x: str(x).lower(), axis="columns", inplace=True)
 
-    data["name"] = data["name"].apply(lambda x: re.sub(r"\d+", "", x).strip())
-    data["Weight(Kg.)"] = data["weight(lbs.)"].apply(lambda x: x * 0.453592)
-    data["Height(m.)"] = data["height(cm.)"].apply(lambda x: x / 100)
+    data["Name"] = data["Name"].apply(lambda x: re.sub(r"\d+", "", x).strip())
+    data["Weight(Kg.)"] = data["Weight(lbs.)"].apply(lambda x: x * 0.453592)
+    data["Height(m.)"] = data["Height(cm.)"].apply(lambda x: x / 100)
+
+    fifa22 = pd.read_csv("resources/CLEAN_FIFA22_official_data.csv", index_col=0)
+    fifa22["Name"] = fifa22["Name"].apply(lambda x: re.sub(r"\d+", "", x).strip())
+
+    for value_column in ["Value(£)", "Wage(£)", "Release Clause(£)"]:
+        data = data.merge(
+            fifa22[["Name", value_column]],
+            on="Name",
+            how="left",
+            suffixes=("", "_fifa22"),
+        )
+        data[f"Previous {value_column}"] = (
+            data[value_column] - data[f"{value_column}_fifa22"]
+        )
+        data.drop(columns=[f"{value_column}_fifa22"], inplace=True)
+
+    # Remove jogadores com nomes duplicados
+    data.drop_duplicates(subset="Name", keep="first", inplace=True)
 
     return data
 
 
-st.session_state["df_data"] = load_data(
+@st.cache_data
+def get_clubs(df_data: pd.DataFrame) -> np.ndarray:
+    return df_data["Club"].unique()
+
+
+st.session_state["fifa23"] = load_data(
     file_csv="resources/CLEAN_FIFA23_official_data.csv"
 )
+st.session_state["clubs"] = get_clubs(st.session_state["fifa23"])
 
 st.title("FIFA23 Official Dataset")
 col1, col2, *_ = st.columns(4)
@@ -42,7 +66,7 @@ with col1:
 with col2:
     st.download_button(
         label="Download data",
-        data=st.session_state["df_data"].reset_index().to_csv(),
+        data=st.session_state["fifa23"].reset_index().to_csv(),
         file_name="CLEAN_FIFA23_official_data.csv",
     )
 st.markdown(
