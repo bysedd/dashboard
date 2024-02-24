@@ -204,47 +204,11 @@ def display_position_means(club_df: pd.DataFrame) -> None:
     st.plotly_chart(fig, use_container_width=True)
 
 
-def display_work_rate(club_df: pd.DataFrame) -> None:
-    # Cria uma tabela com as médias por posição
-    work_rate_averages = club_df["Work Rate"].value_counts()
-
-    fig = px.pie(
-        work_rate_averages,
-        names=work_rate_averages.index,
-        values=work_rate_averages.values,
-        hole=0.3,
-        title="Work Rate distribution",
-        labels={"names": "Work Rate", "values": "Count"},
-    )
-
-    # Aumenta a fonte do título e das métricas
-    fig.update_layout(
-        showlegend=False,
-        title={
-            "text": "Work Rate distribution",
-            "y": 0.9,
-            "x": 0.5,
-            "xanchor": "center",
-            "yanchor": "top",
-            "font": dict(
-                size=24,
-            ),
-        },
-        height=600,
-    ).update_traces(textinfo="percent+label")
-
-    # Aumenta a fonte do texto dentro do gráfico
-    fig.update_traces(textfont_size=14)
-
-    st.plotly_chart(fig, use_container_width=True)
-
-
 def main():
     df_data = st.session_state["fifa23"]
     club_df = select_club(df_data)
     display_club_stats(club_df)
     display_position_means(club_df)
-    display_work_rate(club_df)
 
 
 if __name__ == "__main__":
